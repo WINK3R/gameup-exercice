@@ -1,75 +1,23 @@
-package com.gamesUP.gamesUP.model;
+package com.gamesUP.gamesUP.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+public class GameRequest {
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "games")
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-public class Game {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false, length = 150)
     private String title;
-
-    @Column(length = 2000)
     private String description;
-
-    @Column(length = 100)
     private String genre;
-
-    @Column(precision = 10, scale = 2)
     private BigDecimal price;
-
     private Integer minPlayers;
-
     private Integer maxPlayers;
-
-    /**
-     * Average duration of a play session in minutes.
-     */
     private Integer averageDuration;
-
     private LocalDate releaseDate;
-
     private Double rating;
-
     private Integer stock;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private Category category;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "publisher_id")
-    private Publisher publisher;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id")
-    private Author author;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private Long categoryId;
+    private Long publisherId;
+    private Long authorId;
 
     public String getTitle() {
         return title;
@@ -151,27 +99,27 @@ public class Game {
         this.stock = stock;
     }
 
-    public Category getCategory() {
-        return category;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
-    public Publisher getPublisher() {
-        return publisher;
+    public Long getPublisherId() {
+        return publisherId;
     }
 
-    public void setPublisher(Publisher publisher) {
-        this.publisher = publisher;
+    public void setPublisherId(Long publisherId) {
+        this.publisherId = publisherId;
     }
 
-    public Author getAuthor() {
-        return author;
+    public Long getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setAuthorId(Long authorId) {
+        this.authorId = authorId;
     }
 }
