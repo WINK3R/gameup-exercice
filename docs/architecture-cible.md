@@ -10,6 +10,7 @@ L’API expose des ressources métiers sous forme d’URI cohérentes et de verb
 - `/api/authors`, `/api/publishers`, `/api/categories` : référentiels.
 - `/api/wishlists` et `/api/reviews` : fonctionnalités complémentaires.
 - `/api/recommendations` : recommandations issues de l’API Python.
+- `/api/auth/login` : authentification stateless et émission d'un token JWT.
 
 ### Verbes HTTP
 - `GET /api/games` : liste paginée + filtres de recherche.
@@ -19,6 +20,7 @@ L’API expose des ressources métiers sous forme d’URI cohérentes et de verb
 - `PATCH /api/games/{id}` : mise à jour partielle (ADMIN).
 - `DELETE /api/games/{id}` : suppression (ADMIN).
 - `POST /api/recommendations` : recommandations pour un utilisateur.
+- `POST /api/auth/login` : vérifie l'email/mot de passe puis renvoie un Bearer token.
 
 ## Séparation des responsabilités
 - **Controller** : validation HTTP, mapping des entrées/sorties, codes de réponse.
