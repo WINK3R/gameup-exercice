@@ -27,6 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gamesUP.gamesUP.dto.GameRequest;
 import com.gamesUP.gamesUP.dto.GameSearchRequest;
 import com.gamesUP.gamesUP.model.Game;
+import com.gamesUP.gamesUP.security.JwtService;
 import com.gamesUP.gamesUP.service.GameService;
 
 @WebMvcTest(controllers = GameController.class)
@@ -41,6 +42,9 @@ class GameControllerTest {
 
     @MockBean
     private GameService gameService;
+
+    @MockBean
+    private JwtService jwtService;
 
     @Test
     void searchGamesShouldSanitizePaginationParameters() throws Exception {

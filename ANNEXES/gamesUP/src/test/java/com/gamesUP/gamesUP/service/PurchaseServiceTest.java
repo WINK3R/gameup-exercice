@@ -6,21 +6,19 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.gamesUP.gamesUP.model.Purchase;
-import com.gamesUP.gamesUP.model.User;
 import com.gamesUP.gamesUP.repository.PurchaseRepository;
-import com.gamesUP.gamesUP.repository.UserRepository;
-import com.gamesUP.gamesUP.support.TestDataFactory;
 
 @ExtendWith(MockitoExtension.class)
 class PurchaseServiceTest {
@@ -28,10 +26,10 @@ class PurchaseServiceTest {
     @Mock
     private PurchaseRepository purchaseRepository;
     @Mock
-    private UserRepository userRepository;
+    private CurrentUserService currentUserService;
 
     @InjectMocks
-    private PurchaseService purchaseService;
+    private PurchaseServiceImpl purchaseService;
 
     @Test
     void getAllShouldReturnRepositoryContent() {
@@ -44,10 +42,9 @@ class PurchaseServiceTest {
 
     @Test
     void getMineShouldReturnPurchaseForAuthenticatedUser() {
-        User user = TestDataFactory.createUser(1L, "client@gamesup.test", User.Role.CLIENT);
-        Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), "pwd");
-        List<Purchase> purchases = List.of(TestDataFactory.createPurchase(user));
-        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
+        Authentication authentication = new UsernamePasswordAuthenticationToken("client@gamesup.test", "pwd");
+        List<Purchase> purchases = List.of(new Purchase());
+        when(currentUserService.requireUserId(authentication)).thenReturn(1L);
         when(purchaseRepository.findByUserId(1L)).thenReturn(purchases);
 
         List<Purchase> result = purchaseService.getMine(authentication);
@@ -58,8 +55,9 @@ class PurchaseServiceTest {
     @Test
     void getMineShouldFailWhenUserCannotBeResolved() {
         Authentication authentication = new UsernamePasswordAuthenticationToken("ghost@test", "pwd");
-        when(userRepository.findByEmail("ghost@test")).thenReturn(Optional.empty());
+        when(currentUserService.requireUserId(authentication))
+                .thenThrow(new ResponseStatusException(HttpStatus.UNAUTHORIZED));
 
-        assertThrows(IllegalArgumentException.class, () -> purchaseService.getMine(authentication));
+        assertThrows(ResponseStatusException.class, () -> purchaseService.getMine(authentication));
     }
 }

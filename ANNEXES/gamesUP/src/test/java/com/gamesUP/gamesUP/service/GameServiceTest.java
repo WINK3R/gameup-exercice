@@ -45,7 +45,7 @@ class GameServiceTest {
     private AuthorRepository authorRepository;
 
     @InjectMocks
-    private GameService gameService;
+    private GameServiceImpl gameService;
 
     @Test
     void searchShouldDelegateToRepositoryWithSpecification() {

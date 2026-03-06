@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gamesUP.gamesUP.dto.WishlistRequest;
 import com.gamesUP.gamesUP.model.Wishlist;
+import com.gamesUP.gamesUP.security.JwtService;
 import com.gamesUP.gamesUP.service.WishlistService;
 
 @WebMvcTest(controllers = WishlistController.class)
@@ -34,6 +35,9 @@ class WishlistControllerTest {
 
     @MockBean
     private WishlistService wishlistService;
+
+    @MockBean
+    private JwtService jwtService;
 
     @Test
     void listShouldReturnWishlistForUser() throws Exception {
