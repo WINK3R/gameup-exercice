@@ -27,6 +27,7 @@ import com.gamesUP.gamesUP.model.User;
 import com.gamesUP.gamesUP.repository.GameRepository;
 import com.gamesUP.gamesUP.repository.PurchaseLineRepository;
 import com.gamesUP.gamesUP.repository.PurchaseRepository;
+import com.gamesUP.gamesUP.repository.ReviewRepository;
 import com.gamesUP.gamesUP.repository.UserRepository;
 import com.gamesUP.gamesUP.service.PurchaseLineService;
 import com.gamesUP.gamesUP.service.PurchaseService;
@@ -51,6 +52,8 @@ class PurchaseAccessIntegrationTest {
     private GameRepository gameRepository;
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     private User admin;
     private User client;
@@ -59,6 +62,7 @@ class PurchaseAccessIntegrationTest {
     void setUp() {
         purchaseLineRepository.deleteAll();
         purchaseRepository.deleteAll();
+        reviewRepository.deleteAll();
         gameRepository.deleteAll();
         userRepository.deleteAll();
 

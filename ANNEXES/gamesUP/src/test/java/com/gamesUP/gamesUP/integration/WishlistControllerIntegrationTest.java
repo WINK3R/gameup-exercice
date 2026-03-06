@@ -2,7 +2,6 @@ package com.gamesUP.gamesUP.integration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -23,6 +22,8 @@ import com.gamesUP.gamesUP.dto.WishlistRequest;
 import com.gamesUP.gamesUP.model.Game;
 import com.gamesUP.gamesUP.model.User;
 import com.gamesUP.gamesUP.repository.GameRepository;
+import com.gamesUP.gamesUP.repository.PurchaseLineRepository;
+import com.gamesUP.gamesUP.repository.PurchaseRepository;
 import com.gamesUP.gamesUP.repository.UserRepository;
 import com.gamesUP.gamesUP.repository.WishlistRepository;
 
@@ -40,6 +41,10 @@ class WishlistControllerIntegrationTest {
     private GameRepository gameRepository;
     @Autowired
     private WishlistRepository wishlistRepository;
+    @Autowired
+    private PurchaseLineRepository purchaseLineRepository;
+    @Autowired
+    private PurchaseRepository purchaseRepository;
 
     private User user;
     private Game game;
@@ -47,6 +52,8 @@ class WishlistControllerIntegrationTest {
     @BeforeEach
     void setUp() {
         wishlistRepository.deleteAll();
+        purchaseLineRepository.deleteAll();
+        purchaseRepository.deleteAll();
         gameRepository.deleteAll();
         userRepository.deleteAll();
         user = userRepository.save(TestFixtures.user());

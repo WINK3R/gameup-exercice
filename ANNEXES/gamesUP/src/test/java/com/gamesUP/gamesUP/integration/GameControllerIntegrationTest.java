@@ -29,6 +29,9 @@ import com.gamesUP.gamesUP.repository.AuthorRepository;
 import com.gamesUP.gamesUP.repository.CategoryRepository;
 import com.gamesUP.gamesUP.repository.GameRepository;
 import com.gamesUP.gamesUP.repository.PublisherRepository;
+import com.gamesUP.gamesUP.repository.PurchaseLineRepository;
+import com.gamesUP.gamesUP.repository.PurchaseRepository;
+import com.gamesUP.gamesUP.repository.ReviewRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -46,6 +49,12 @@ class GameControllerIntegrationTest {
     private PublisherRepository publisherRepository;
     @Autowired
     private AuthorRepository authorRepository;
+    @Autowired
+    private ReviewRepository reviewRepository;
+    @Autowired
+    private PurchaseLineRepository purchaseLineRepository;
+    @Autowired
+    private PurchaseRepository purchaseRepository;
 
     private Category category;
     private Publisher publisher;
@@ -53,6 +62,9 @@ class GameControllerIntegrationTest {
 
     @BeforeEach
     void setUp() {
+        purchaseLineRepository.deleteAll();
+        purchaseRepository.deleteAll();
+        reviewRepository.deleteAll();
         gameRepository.deleteAll();
         authorRepository.deleteAll();
         publisherRepository.deleteAll();
